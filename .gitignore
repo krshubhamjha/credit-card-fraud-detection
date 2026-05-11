@@ -1,0 +1,10 @@
+venv/
+data/creditcard.csv
+data/processed/
+.ipynb_checkpoints/
+**/.ipynb_checkpoints/
+__pycache__/
+*.pyc
+.vscode/
+.DS_Store
+.env

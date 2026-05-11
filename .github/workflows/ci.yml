@@ -1,0 +1,35 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+jobs:
+  test-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v4
+
+      - name: setup python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: install dependencies
+        run: |
+          pip install xgboost shap imbalanced-learn streamlit scikit-learn pandas numpy matplotlib seaborn pytest
+
+      - name: run tests
+        run: |
+          pytest tests/test_preprocess.py -v
+
+      - name: deploy
+        if: success()
+        run: |
+          echo "tests passed - streamlit cloud will auto deploy!"
